@@ -17,8 +17,6 @@ const upload = multer({
   },
 });
 
-// api/get
-router.get('/getPosts');
 
 router.get('/getPosts', async (req, res) => {
   try {

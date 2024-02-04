@@ -1,15 +1,15 @@
-import express from 'express'
+import express from 'express';
 import Project from '../Models/project.model.js';
 import { errorHandler } from '../Utils/Error.js';
 
-const router = express.Router()
+const router = express.Router();
 
 router.post('/createProject', async (req, res, next) => {
   try {
     const { title, description, gitUrl, technology } = req.body;
 
     if (!title || !description || !gitUrl || !technology) {
-      return next(errorHandler(400, "All fields are required"));
+      return next(errorHandler(400, 'All fields are required'));
     }
 
     const technologiesArray = technology.split(',').map((tech) => tech.trim());
@@ -25,21 +25,20 @@ router.post('/createProject', async (req, res, next) => {
 
     // Respond with success message
     res.status(201).json({
-      message: "Project Added successfully",
+      message: 'Project added successfully',
     });
   } catch (error) {
-    next(errorHandler(500, "Sorry! Something went wrong"));
+    next(errorHandler(500, 'Sorry! Something went wrong'));
   }
 });
 
-router.get('/getProjects', async (req, res) => {
+router.get('/getProjects', async (req, res, next) => {
   try {
-    const projects = await Project.find()
-    // Respond with a 200 OK status and the list of programs as JSON
+    const projects = await Project.find();
     res.status(200).json(projects);
   } catch (error) {
-    next(errorHandler(500, "Sorry! Something went wrong"));
+    next(errorHandler(500, 'Failed to fetch projects'));
   }
-})
+});
 
 export default router;
