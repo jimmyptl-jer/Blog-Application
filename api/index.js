@@ -27,7 +27,7 @@ app.use(express.static(path.join(__dirname, '../client/dist')));
 
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL,
+    origin: process.env.FRONTEND_URL,"https://graywolg-blog.onrender.com",
     credentials: true,
   })
 );
