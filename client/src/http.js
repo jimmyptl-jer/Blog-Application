@@ -121,10 +121,13 @@ export const addProject = async (data) => {
 }
 
 export const fetchProjects = async () => {
-  const response = await fetch(`${API_BASE_URL}/api/project/getProjects`)
+  const response = await fetch(`${API_BASE_URL}/api/project/getProjects`);
 
-  if (!response) {
-    throw new Error('Failed to get projects')
+  if (!response.ok) {
+    // You can decide what to do when the response is not okay, for example, return an empty array.
+    console.error(`Failed to get projects. Status: ${response.status}`);
+    return [];
   }
-  return response.json()
-}
+
+  return response.json();
+};
