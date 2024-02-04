@@ -1,20 +1,8 @@
 import Hero from "../Components/Hero"
 
-import { useQuery } from 'react-query'
-import * as apiClient from '../http'
-import { useDispatch } from "react-redux"
-import { signInSuccess } from "../store/user-slice"
 import Experience from "../Components/Experience"
 
 const Home = () => {
-
-  const dispatch = useDispatch()
-
-
-  const { data: currentUser } = useQuery('fetchCurrentUser', apiClient.fetchCurrentUser, {});
-
-  dispatch(signInSuccess(currentUser))
-
 
   return (
     <div>
