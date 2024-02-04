@@ -1,0 +1,6 @@
+body {
+  font-family: "Josefin Slab", serif;
+  --webkit-font-smoothing: "Josefin Slab", serif;
+  -moz-osx-font-smoothing: "Josefin Slab", serif;
+  font-style: normal;
+}
