@@ -1,17 +1,25 @@
-import { useState } from 'react';
-import { useQuery } from 'react-query';
-
+import { useState, useEffect } from 'react';
 import * as apiClient from '../http';
 import ProjectComp from '../Components/ProjectComp';
 
 const Project = () => {
   const [projects, setProjects] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const { data: fetchProjects, isLoading } = useQuery('fetchProjects', apiClient.fetchProjects, {
-    onSuccess: (data) => {
-      setProjects(data);
-    },
-  });
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await apiClient.fetchProjects();
+        setProjects(data);
+      } catch (error) {
+        console.error('Error fetching projects:', error.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <div className="p-3 max-w-3xl mx-auto min-h-screen">
