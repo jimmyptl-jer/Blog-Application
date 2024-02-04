@@ -10,7 +10,6 @@ const Project = () => {
   const { data: fetchProjects, isLoading } = useQuery('fetchProjects', apiClient.fetchProjects, {
     onSuccess: (data) => {
       setProjects(data);
-      console.log(fetchProjects)
     },
   });
 

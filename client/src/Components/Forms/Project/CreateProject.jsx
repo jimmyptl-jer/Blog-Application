@@ -27,7 +27,6 @@ const CreateProject = () => {
   });
 
   const onSubmit = handleSubmit((data) => {
-    console.log(data);
     mutate(data)
   });
 
