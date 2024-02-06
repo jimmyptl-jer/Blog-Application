@@ -15,6 +15,8 @@ export const AppContextProvider = ({ children }) => {
     retry: false
   })
 
+  console.log(isError)
+
   return (
     <AppContext.Provider value={{
       showToast: (toastMessage) => {

@@ -1,4 +1,3 @@
-import React from 'react'
 import { Sidebar } from 'flowbite-react'
 import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
