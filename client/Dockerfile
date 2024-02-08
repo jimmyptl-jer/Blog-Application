@@ -1,34 +1,29 @@
-### First Build: Build Node.js Application ###
+# Use the official Node.js runtime as the base image
+FROM node as build
 
-# Use the official Node.js image as the base image for the build stage
-FROM node AS build
+# Set the working directory in the container
+WORKDIR /app
 
-# Set the working directory inside the container for the build stage
-WORKDIR /usr/src/app
-
-# Copy package.json and package-lock.json files from the host machine to the working directory in the container
+# Copy package.json and package-lock.json to the working directory
 COPY package*.json ./
 
-# Install dependencies using npm ci for reproducible builds
-RUN npm ci
+# Install dependencies
+RUN npm install
 
-# Copy the rest of the application source code from the host machine to the working directory in the container
+# Copy the entire application code to the container
 COPY . .
 
-# Run the build script to compile the application
+# Build the React app for production
 RUN npm run build
 
+# Use Nginx as the production server
+FROM nginx:alpine
 
-### Second Build: Deploy the Built Application Using NGINX ###
+# Copy the built React app to Nginx's web server directory
+COPY --from=build /app/build /usr/share/nginx/html
 
-# Use the official NGINX image for the final stage
-FROM nginxinc/nginx-unprivileged
+# Expose port 80 for the Nginx server
+EXPOSE 80
 
-# Copy the NGINX configuration file from the host machine to the appropriate location in the NGINX image
-COPY nginx.conf /etc/nginx.conf.d/default.conf
-
-# Copy the built application files from the build stage to the NGINX web root directory
-COPY --from=build /usr/src/app/dist /usr/share/nginx/html
-
-# Expose port 8080 to allow external access to the NGINX server
-EXPOSE 8080
+# Start Nginx when the container runs
+CMD ["nginx", "-g", "daemon off;"]
