@@ -19,20 +19,10 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
-// Get the current module's directory using import.meta.url
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-app.use(express.static(path.join(__dirname, '../client/dist')));
-
 app.use(
-  cors({
-    origin: [process.env.FRONTEND_URL, "https://graywolg-blog.onrender.com"],
-    credentials: true,
-  })
+  cors()
 );
 
-console.log('FRONTEND_URL:', process.env.FRONTEND_URL);
 
 app.use('/api/user', userRoutes);
 app.use('/api/auth', authRoutes);
