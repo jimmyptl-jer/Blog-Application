@@ -1,25 +1,21 @@
 pipeline {
-    agent {
-        docker {
-      image:'node:latest'
-        }
-    }
+    agent any
 
     // Define tools to be installed
     tools {
         // Install Node.js tool with a specific version
-        nodejs 'nodejs'
+        nodejs 'node:latest'
     }
 
     environment {
-    JWT_SECRET = 'TestSecreaTKey'
-    MONGO_URI = 'mongodb+srv://jimmyptl46:jimmyptl46@cluster0.zct2z4b.mongodb.net/?retryWrites=true&w=majority'
+        JWT_SECRET = 'TestSecreaTKey'
+        MONGO_URI = 'mongodb+srv://jimmyptl46:jimmyptl46@cluster0.zct2z4b.mongodb.net/?retryWrites=true&w=majority'
     }
     stages {
         stage('Checkout') {
       steps {
         // Check out the repository from GitHub
-        git 'https://github.com/jimmyptl-jer/RealEstateProject-MERN.git'
+        git branch: 'main', url: 'https://github.com/jimmyptl-jer/Blog-Application.git'
       }
         }
 
