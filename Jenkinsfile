@@ -1,5 +1,9 @@
 pipeline {
-    agent any
+    agent {
+      docker {
+        image 'node:latest'
+      }
+    }
 
     // Define tools to be installed
     tools {
