@@ -23,3 +23,8 @@ jobs:
         working-directory: ./client  # Specify the working directory for the step
         run: |
           docker build -t ${{ secrets.DOCKER_USERNAME }}/blog-application:client-${{ github.run_number }} .
+
+      - name: Build Server Docker Image
+        working-directory: ./api
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/blog-application:api-${{ github.run_number }} . 
