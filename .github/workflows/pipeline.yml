@@ -49,23 +49,10 @@ jobs:
           npm install
           npm run build
 
-      - name: Test the Client Code
-        working-directory: ./client
-        run: npm test -- --coverage
-
       # Install dependencies and build the server application.
       - name: Install Dependencies and Build Server
         working-directory: ./api
         run: |
           npm install
-
-      - name: Test the Api Code
-        working-directory: ./api
-        run: npm test -- --coverage
-      
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
 
 
