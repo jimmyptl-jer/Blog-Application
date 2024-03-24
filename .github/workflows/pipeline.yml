@@ -9,6 +9,7 @@ on:
 
 # Define environment variables for the workflow.
 env:
+  FILE_NAME: mern-artifacts
   mongo_uri: ${{ secrets.MONGO_URI }}
   frontend_url: ${{ secrets.FRONTEND_URL }}
   jwt_secret: ${{ secrets.JWT_SECRET }}
@@ -29,7 +30,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: mern-artifacts  # Name of the artifact
-          path: ./artifacts     # Path to the directory containing artifacts
+          path: ./${{ env.FILE_NAME }}     # Path to the directory containing artifacts
 
       # Upgrade the Ubuntu image (optional).
       - name: Upgrade Ubuntu Image
@@ -62,5 +63,5 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: mern-artifacts  # Name of the artifact
-          path: ./artifacts      # Path to the directory containing artifacts
+          path: ./${{ env.FILE_NAME }}     # Path to the directory containing artifacts
 
