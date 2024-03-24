@@ -22,7 +22,7 @@ jobs:
   build:
     strategy:
       matrix:
-        node_version: [21.x,20.x,19.x]
+        node_version: [21.x4]
     # Set the operating system for the job.
     runs-on: ubuntu-latest
     
