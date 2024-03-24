@@ -1,0 +1,55 @@
+# The name of the workflow.
+name: MERN Test
+
+# Define when the workflow should run (on push to main branch).
+on:
+  push:
+    branches:
+      - main
+
+# Define environment variables for the workflow.
+env:
+  mongo_uri: ${{ secrets.MONGO_URI }}
+  frontend_url: ${{ secrets.FRONTEND_URL }}
+  jwt_secret: ${{ secrets.JWT_SECRET }}
+  cloudinary_name: ${{ secrets.CLOUDINARY_NAME }}
+  cloudinary_api_key: ${{ secrets.CLOUDINARY_API_KEY }}
+  cloudinary_api_secret: ${{ secrets.CLOUDINARY_API_SECRET }}
+
+# Define jobs for the workflow.
+jobs:
+  build:
+    # Set the operating system for the job.
+    runs-on: ubuntu-latest
+    
+    # Define steps to be executed as part of the job.
+    steps:
+      # Upgrade the Ubuntu image (optional).
+      - name: Upgrade Ubuntu Image
+        run: sudo apt update && sudo apt upgrade -y
+
+      # Checkout the code from the GitHub repository.
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # Install Node.js and npm.
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      # Install dependencies and run tests for the client application.
+      - name: Install Dependencies and Build Client
+        working-directory: ./client
+        run: |
+          npm install
+          npm run build
+          
+
+      # Install dependencies and run tests for the server application.
+      - name: Install Dependencies and Build Server
+        working-directory: ./api
+        run: |
+          npm install
+          npm run build
+          
