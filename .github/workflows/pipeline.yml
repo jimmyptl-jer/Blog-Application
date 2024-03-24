@@ -16,6 +16,7 @@ env:
   cloudinary_name: ${{ secrets.CLOUDINARY_NAME }}
   cloudinary_api_key: ${{ secrets.CLOUDINARY_API_KEY }}
   cloudinary_api_secret: ${{ secrets.CLOUDINARY_API_SECRET }}
+  CODECOV_TOKEN : ${{secrets.CODECOV_TOKEN}}
 
 # Define jobs for the workflow.
 jobs:
@@ -46,21 +47,35 @@ jobs:
           npm install
           npm run build
 
+      - name: Test the Client Code
+        working-directory: ./client
+        run: npm test -- --coverage
+
       # Install dependencies and build the server application.
       - name: Install Dependencies and Build Server
         working-directory: ./api
         run: |
           npm install
 
-      # Upload artifacts
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v2
+      - name: Test the Api Code
+        working-directory: ./api
+        run: npm test -- --coverage
+      
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
         with:
-          name: ${{ env.FILE_NAME }}  # Name of the artifact
-          path: ./${{ env.FILE_NAME }}  # Path to the directories containing build artifacts
+          token: ${{ secrets.CODECOV_TOKEN }}
 
-      # Download artifacts
-      - name: Download Artifacts
-        uses: actions/download-artifact@v2
-        with:
-          name: ${{ env.FILE_NAME }}  # Name of the artifact
+          
+      # # Upload artifacts
+      # - name: Upload Artifacts
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: ${{ env.FILE_NAME }}  # Name of the artifact
+      #     path: ./${{ env.FILE_NAME }}  # Path to the directories containing build artifacts
+
+      # # Download artifacts
+      # - name: Download Artifacts
+      #   uses: actions/download-artifact@v2
+      #   with:
+      #     name: ${{ env.FILE_NAME }}  # Name of the artifact
