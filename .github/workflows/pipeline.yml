@@ -9,17 +9,24 @@ on:
 
 # Define environment variables for the workflow.
 env:
+  # MongoDB URI
   mongo_uri: ${{ secrets.MONGO_URI }}
+  # Frontend URL
   frontend_url: ${{ secrets.FRONTEND_URL }}
+  # JWT secret
   jwt_secret: ${{ secrets.JWT_SECRET }}
+  # Cloudinary credentials
   cloudinary_name: ${{ secrets.CLOUDINARY_NAME }}
   cloudinary_api_key: ${{ secrets.CLOUDINARY_API_KEY }}
   cloudinary_api_secret: ${{ secrets.CLOUDINARY_API_SECRET }}
+  # Codecov token
   CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
 # Define jobs for the workflow.
 jobs:
+  # Build job
   build:
+    # Strategy for matrix builds with different Node.js versions
     strategy:
       matrix:
         node_version: [21, 20]
@@ -56,28 +63,33 @@ jobs:
         run: |
           npm install
 
-  deploy:  # Define a job named 'deploy'
-    runs-on: ubuntu-latest  # Specify the operating system for the job
+  # Deploy job
+  deploy:
+    # Define dependencies on the build job
+    needs: [build]
+    
+    # Set the operating system for the job.
+    runs-on: ubuntu-latest
       
-    steps:  # Define the steps to be executed as part of the job
-            
+    # Define steps to be executed as part of the job.
+    steps:
       # Upgrade the Ubuntu image (optional).
-      - name: Upgrade Ubuntu Image  # Name of the step
-        run: sudo apt update && sudo apt upgrade -y  # Command to upgrade the Ubuntu image
+      - name: Upgrade Ubuntu Image
+        run: sudo apt update && sudo apt upgrade -y
           
       # Checkout the code from the GitHub repository.
-      - name: Checkout Code  # Name of the step
-        uses: actions/checkout@v2  # Use the actions/checkout action to checkout the code
+      - name: Checkout Code
+        uses: actions/checkout@v2
       
       # Build Client Docker Image
       - name: Build Client Docker Image
-        working-directory: ./client  # Specify the working directory for the step
+        working-directory: ./client
         run: |
           docker build -t ${{ secrets.DOCKER_USERNAME }}/blog-application:client-${{ github.run_number }} .
       
       # Build Server Docker Image
       - name: Build Server Docker Image
-        working-directory: ./api  # Specify the working directory for the step
+        working-directory: ./api
         run: |
           docker build -t ${{ secrets.DOCKER_USERNAME }}/blog-application:api-${{ github.run_number }} . 
       
