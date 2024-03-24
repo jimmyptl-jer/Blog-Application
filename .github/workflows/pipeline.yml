@@ -47,9 +47,8 @@ jobs:
           
 
       # Install dependencies and run tests for the server application.
-      - name: Install Dependencies and Build Server
+      - name: Install Dependencies on Server
         working-directory: ./api
         run: |
           npm install
-          npm run build
           
