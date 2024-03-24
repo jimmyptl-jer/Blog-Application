@@ -25,13 +25,6 @@ jobs:
     
     # Define steps to be executed as part of the job.
     steps:
-      # Upload artifacts
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: mern-artifacts  # Name of the artifact
-          path: ./${{ env.FILE_NAME }}     # Path to the directory containing artifacts
-
       # Upgrade the Ubuntu image (optional).
       - name: Upgrade Ubuntu Image
         run: sudo apt update && sudo apt upgrade -y
@@ -58,10 +51,17 @@ jobs:
         working-directory: ./api
         run: |
           npm install
-          
+
+      # Upload artifacts
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.FILE_NAME }}  # Name of the artifact
+          path: ./client/build ./api/build  # Path to the directories containing build artifacts
+
+      # Download artifacts
       - name: Download Artifacts
         uses: actions/download-artifact@v2
         with:
-          name: mern-artifacts  # Name of the artifact
-          path: ./${{ env.FILE_NAME }}     # Path to the directory containing artifacts
-
+          name: ${{ env.FILE_NAME }}  # Name of the artifact
+          path: ./downloaded_artifacts  # Path to the directory to download artifacts to
