@@ -9,14 +9,13 @@ on:
 
 # Define environment variables for the workflow.
 env:
-  FILE_NAME: mern-artifacts
   mongo_uri: ${{ secrets.MONGO_URI }}
   frontend_url: ${{ secrets.FRONTEND_URL }}
   jwt_secret: ${{ secrets.JWT_SECRET }}
   cloudinary_name: ${{ secrets.CLOUDINARY_NAME }}
   cloudinary_api_key: ${{ secrets.CLOUDINARY_API_KEY }}
   cloudinary_api_secret: ${{ secrets.CLOUDINARY_API_SECRET }}
-  CODECOV_TOKEN : ${{secrets.CODECOV_TOKEN}}
+  CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
 # Define jobs for the workflow.
 jobs:
@@ -26,13 +25,6 @@ jobs:
     
     # Define steps to be executed as part of the job.
     steps:
-      - name: 'Upload Artifact'
-        uses: actions/upload-artifact@v4
-        with:
-         name: my-artifact
-         path: ./artifacts/artifact.txt
-         retention-days: 5
-
       # Upgrade the Ubuntu image (optional).
       - name: Upgrade Ubuntu Image
         run: sudo apt update && sudo apt upgrade -y
@@ -72,8 +64,5 @@ jobs:
         uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-      
-      - name: Download a single artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: my-artifact
+
+
