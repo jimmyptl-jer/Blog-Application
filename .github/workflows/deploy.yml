@@ -1,7 +1,7 @@
 name: MERN Deploy  # Name of the workflow
 
 on:  # Define when the workflow should run
-  push:
+  pull_request:
     branches:
       - main
 

@@ -1,5 +1,5 @@
 # The name of the workflow.
-name: MERN Build
+name: MERN CI/CD
 
 # Define when the workflow should run (on push to main branch).
 on:
@@ -22,7 +22,7 @@ jobs:
   build:
     strategy:
       matrix:
-        node_version: [21,20]
+        node_version: [21, 20]
         
     # Set the operating system for the job.
     runs-on: ubuntu-latest
@@ -38,10 +38,10 @@ jobs:
         uses: actions/checkout@v4
 
       # Install Node.js and npm.
-      - name: Setup Node.js ${{matrix.node_version}}
+      - name: Setup Node.js ${{ matrix.node_version }}
         uses: actions/setup-node@v4
         with:
-          node-version: ${{matrix.node_version}}
+          node-version: ${{ matrix.node_version }}
 
       # Install dependencies and build the client application.
       - name: Install Dependencies and Build Client
@@ -56,4 +56,40 @@ jobs:
         run: |
           npm install
 
-
+  deploy:  # Define a job named 'deploy'
+    runs-on: ubuntu-latest  # Specify the operating system for the job
+      
+    steps:  # Define the steps to be executed as part of the job
+            
+      # Upgrade the Ubuntu image (optional).
+      - name: Upgrade Ubuntu Image  # Name of the step
+        run: sudo apt update && sudo apt upgrade -y  # Command to upgrade the Ubuntu image
+          
+      # Checkout the code from the GitHub repository.
+      - name: Checkout Code  # Name of the step
+        uses: actions/checkout@v2  # Use the actions/checkout action to checkout the code
+      
+      # Build Client Docker Image
+      - name: Build Client Docker Image
+        working-directory: ./client  # Specify the working directory for the step
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/blog-application:client-${{ github.run_number }} .
+      
+      # Build Server Docker Image
+      - name: Build Server Docker Image
+        working-directory: ./api  # Specify the working directory for the step
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/blog-application:api-${{ github.run_number }} . 
+      
+      # Docker Hub Login
+      - name: Docker Hub Login
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}  # Provide Docker Hub username
+          password: ${{ secrets.DOCKER_PASSWORD }}  # Provide Docker Hub password
+          
+      # Push Docker Images To Docker Hub
+      - name: Push Docker Images To Docker Hub
+        run: |
+          docker push ${{ secrets.DOCKER_USERNAME }}/blog-application:client-${{ github.run_number }}
+          docker push ${{ secrets.DOCKER_USERNAME }}/blog-application:api-${{ github.run_number }}
