@@ -24,6 +24,13 @@ jobs:
     
     # Define steps to be executed as part of the job.
     steps:
+      # Upload artifacts
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: mern-artifacts  # Name of the artifact
+          path: ./artifacts      # Path to the directory containing artifacts
+
       # Upgrade the Ubuntu image (optional).
       - name: Upgrade Ubuntu Image
         run: sudo apt update && sudo apt upgrade -y
@@ -36,19 +43,18 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20'
+          node-version: '14'
 
-      # Install dependencies and run tests for the client application.
+      # Install dependencies and build the client application.
       - name: Install Dependencies and Build Client
         working-directory: ./client
         run: |
           npm install
           npm run build
-          
 
-      # Install dependencies and run tests for the server application.
-      - name: Install Dependencies on Server
+      # Install dependencies and build the server application.
+      - name: Install Dependencies and Build Server
         working-directory: ./api
         run: |
           npm install
-          
+          npm run build
