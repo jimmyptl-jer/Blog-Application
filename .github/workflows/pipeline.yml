@@ -1,5 +1,5 @@
 # The name of the workflow.
-name: MERN Test
+name: MERN Build
 
 # Define when the workflow should run (on push to main branch).
 on:
@@ -23,6 +23,7 @@ jobs:
     strategy:
       matrix:
         node_version: [21,20]
+        
     # Set the operating system for the job.
     runs-on: ubuntu-latest
     

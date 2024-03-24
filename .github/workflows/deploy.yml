@@ -1,0 +1,25 @@
+name: MERN Deploy  # Name of the workflow
+
+on:  # Define when the workflow should run
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:  # Define a job named 'deploy'
+    runs-on: ubuntu-latest  # Specify the operating system for the job
+
+    steps:  # Define the steps to be executed as part of the job
+      # Upgrade the Ubuntu image (optional).
+      - name: Upgrade Ubuntu Image  # Name of the step
+        run: sudo apt update && sudo apt upgrade -y  # Command to upgrade the Ubuntu image
+    
+      # Checkout the code from the GitHub repository.
+      - name: Checkout Code  # Name of the step
+        uses: actions/checkout@v2  # Use the actions/checkout action to checkout the code
+
+      # Build Client Docker Image
+      - name: Build Client Docker Image
+        working-directory: ./client  # Specify the working directory for the step
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/blog-application:client-${{ github.run_number }} .
