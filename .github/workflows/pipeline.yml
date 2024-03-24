@@ -26,6 +26,13 @@ jobs:
     
     # Define steps to be executed as part of the job.
     steps:
+      - name: 'Upload Artifact'
+        uses: actions/upload-artifact@v4
+        with:
+         name: my-artifact
+         path: my_file.txt
+         retention-days: 5
+
       # Upgrade the Ubuntu image (optional).
       - name: Upgrade Ubuntu Image
         run: sudo apt update && sudo apt upgrade -y
@@ -65,17 +72,8 @@ jobs:
         uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-
-          
-      # # Upload artifacts
-      # - name: Upload Artifacts
-      #   uses: actions/upload-artifact@v2
-      #   with:
-      #     name: ${{ env.FILE_NAME }}  # Name of the artifact
-      #     path: ./${{ env.FILE_NAME }}  # Path to the directories containing build artifacts
-
-      # # Download artifacts
-      # - name: Download Artifacts
-      #   uses: actions/download-artifact@v2
-      #   with:
-      #     name: ${{ env.FILE_NAME }}  # Name of the artifact
+      
+      - name: Download a single artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: my-artifact
