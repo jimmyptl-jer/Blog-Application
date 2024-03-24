@@ -20,6 +20,9 @@ env:
 # Define jobs for the workflow.
 jobs:
   build:
+    strategy:
+      matrix:
+        node_version: [21.x,20.x,19.x]
     # Set the operating system for the job.
     runs-on: ubuntu-latest
     
@@ -31,13 +34,13 @@ jobs:
 
       # Checkout the code from the GitHub repository.
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # Install Node.js and npm.
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - name: Setup Node.js ${{matrix.node_version}}
+        uses: actions/setup-node@v4
         with:
-          node-version: '14'
+          node-version: ${{matrix.node_version}}
 
       # Install dependencies and build the client application.
       - name: Install Dependencies and Build Client
