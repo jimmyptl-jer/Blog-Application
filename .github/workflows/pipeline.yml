@@ -29,7 +29,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: mern-artifacts  # Name of the artifact
-          path: ./artifacts      # Path to the directory containing artifacts
+          path: ./artifacts     # Path to the directory containing artifacts
 
       # Upgrade the Ubuntu image (optional).
       - name: Upgrade Ubuntu Image
