@@ -33,6 +33,7 @@ jobs:
             unzip awscliv2.zip
             sudo ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update
             sudo apt update
+            sudo apt upgrade -y
             sudo apt install docker.io -y
             sudo snap install docker
             sudo systemctl status docker
