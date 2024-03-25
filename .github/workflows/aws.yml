@@ -26,21 +26,12 @@ jobs:
           REMOTE_HOST: ${{secrets.AWS_EC2_HOST}}
           REMOTE_USER: ${{secrets.AWS_EC2_USERNAME}}
           SSH_PRIVATE_KEY:  ${{secrets.AWS_EC2_SSH_KEY}}
-        script:
-          #!/bin/bash
-
-          # Install Docker
+      
+      - name: Install Docker and Configure
+        run: |
           sudo apt update
           sudo apt install -y docker.io
-
-          # Start Docker service
           sudo systemctl start docker
-
-          # Enable Docker service to start on boot
           sudo systemctl enable docker
-
-          # Add current user to the docker group to run Docker commands without sudo
           sudo usermod -aG docker $USER
-
-          # Restart Docker service to apply changes
           sudo systemctl restart docker
