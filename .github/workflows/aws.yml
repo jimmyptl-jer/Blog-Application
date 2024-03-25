@@ -61,6 +61,6 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.MY_EC2_SSH_KEY }}
-
-        script: |
-          sudo ls
+          
+          script: |
+            sudo ls
