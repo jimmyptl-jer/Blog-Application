@@ -65,5 +65,9 @@ jobs:
           script: |
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/blog-application:client
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/blog-application:api
+            sudo docker stop my-node-app || true
+            sudo docker rm my-node-app || true
+            sudo docker stop my-node-app-api || true
+            sudo docker rm my-node-app-api || true
             sudo docker run -d -p 80:80 --name  ${{ secrets.DOCKER_USERNAME }}/blog-application:client
             sudo docker run -d -p 3000:3000 --name my-node-app-api ${{ secrets.DOCKER_USERNAME }}/blog-application:api
