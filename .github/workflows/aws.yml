@@ -57,7 +57,7 @@ jobs:
                 aws-region: 'us-east-1'
 
             - name: SSH into EC2 Instance
-              uses: easingthemes/ssh-deploy@main
+              uses: appleboy/ssh-action@main
               with:
                 REMOTE_HOST: ${{secrets.AWS_EC2_HOST}}
                 REMOTE_USER: ${{secrets.AWS_EC2_USERNAME}}
