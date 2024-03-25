@@ -42,7 +42,7 @@ jobs:
               docker push ${{ secrets.DOCKER_USERNAME }}/blog-application:client
               docker push ${{ secrets.DOCKER_USERNAME }}/blog-application:api  
     aws:
-        needs: [deploy]
+        
         runs-on: ubuntu-latest
 
         steps:
@@ -57,7 +57,7 @@ jobs:
                 aws-region: 'us-east-1'
 
             - name: SSH into EC2 Instance
-              uses: appleboy/ssh-action@main
+              uses: appleboy/ssh-action@master
               with:
                 REMOTE_HOST: ${{secrets.AWS_EC2_HOST}}
                 REMOTE_USER: ${{secrets.AWS_EC2_USERNAME}}
