@@ -21,7 +21,7 @@ jobs:
                 aws-region: 'us-east-1'
             
             - name: SSH into EC2 Instance
-              uses: jimmyptl-jer/Blog-Application@main
+              uses: easingthemes/ssh-deploy@v2.1.5
               with:
                 host: ${{secrets.AWS_EC2_HOST}}
                 username: ${{secrets.AWS_EC2_USERNAME}}
