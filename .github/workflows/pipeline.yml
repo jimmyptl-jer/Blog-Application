@@ -7,21 +7,6 @@ on:
     branches:
       - main
 
-# Define environment variables for the workflow.
-env:
-  # MongoDB URI
-  mongo_uri: ${{ secrets.MONGO_URI }}
-  # Frontend URL
-  frontend_url: ${{ secrets.FRONTEND_URL }}
-  # JWT secret
-  jwt_secret: ${{ secrets.JWT_SECRET }}
-  # Cloudinary credentials
-  cloudinary_name: ${{ secrets.CLOUDINARY_NAME }}
-  cloudinary_api_key: ${{ secrets.CLOUDINARY_API_KEY }}
-  cloudinary_api_secret: ${{ secrets.CLOUDINARY_API_SECRET }}
-  # Codecov token
-  CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-
 # Define jobs for the workflow.
 jobs:
   # Build job
