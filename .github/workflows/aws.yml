@@ -26,16 +26,11 @@ jobs:
           REMOTE_HOST: ${{secrets.AWS_EC2_HOST}}
           REMOTE_USER: ${{secrets.AWS_EC2_USERNAME}}
           SSH_PRIVATE_KEY:  ${{secrets.AWS_EC2_SSH_KEY}}
-      
-      - name: Install Docker and Configure
-        run: |
-            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-            unzip awscliv2.zip
-            sudo ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update
-            sudo apt update
-            sudo apt upgrade -y
-            sudo apt install docker.io -y
-            sudo snap install docker
-            sudo systemctl status docker
-            docker --version
-            docker
+        
+          run: |
+            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/blog-application:client-${{ github.run_number }}
+            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/blog-application:api-${{ github.run_number }}
+            sudo docker stop my-node-app || true
+            sudo docker rm my-node-app || true
+            sudo docker run -d -p 3000:3000 --name my-node-app ${{ secrets.DOCKER_USERNAME }}/blog-application:client-${{ github.run_number }}
+            sudo docker run -d -p 4000:4000 --name my-node-app-api ${{ secrets.DOCKER_USERNAME }}/blog-application:api-${{ github.run_number }}
