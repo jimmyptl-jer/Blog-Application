@@ -29,7 +29,7 @@ jobs:
     # Strategy for matrix builds with different Node.js versions
     strategy:
       matrix:
-        node_version: [21, 20]
+        node_version: [21]
         
     # Set the operating system for the job.
     runs-on: ubuntu-latest
