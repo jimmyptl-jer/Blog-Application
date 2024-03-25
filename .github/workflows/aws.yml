@@ -42,7 +42,7 @@ jobs:
               docker push ${{ secrets.DOCKER_USERNAME }}/blog-application:client
               docker push ${{ secrets.DOCKER_USERNAME }}/blog-application:api  
     aws:
-     
+        needs: [deploy]
         runs-on: ubuntu-latest
 
         steps:
@@ -64,4 +64,4 @@ jobs:
                 SSH_PRIVATE_KEY:  ${{secrets.AWS_EC2_SSH_KEY}}
         
                 script: |
-                    sudo touch jimmy.txt
+                    sudo ls
