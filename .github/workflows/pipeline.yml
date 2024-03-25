@@ -123,7 +123,8 @@ jobs:
           REMOTE_HOST: ${{secrets.AWS_EC2_HOST}}
           REMOTE_USER: ${{secrets.AWS_EC2_USERNAME}}
           SSH_PRIVATE_KEY:  ${{secrets.AWS_EC2_SSH_KEY}}
-          run: |
+         
+          script: |
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/blog-application:client
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/blog-application:api
             sudo docker run -d -p 80:80 --name  ${{ secrets.DOCKER_USERNAME }}/blog-application:client
