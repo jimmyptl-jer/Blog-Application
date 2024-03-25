@@ -32,5 +32,5 @@ jobs:
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/blog-application:api-${{ github.run_number }}
             sudo docker stop my-node-app || true
             sudo docker rm my-node-app || true
-            sudo docker run -d -p 3000:3000 --name my-node-app ${{ secrets.DOCKER_USERNAME }}/blog-application:client-${{ github.run_number }}
-            sudo docker run -d -p 4000:4000 --name my-node-app-api ${{ secrets.DOCKER_USERNAME }}/blog-application:api-${{ github.run_number }}
+            sudo docker run -d -p 80:80 --name my-node-app ${{ secrets.DOCKER_USERNAME }}/blog-application:client-${{ github.run_number }}
+            sudo docker run -d -p 3000:3000 --name my-node-app-api ${{ secrets.DOCKER_USERNAME }}/blog-application:api-${{ github.run_number }}
