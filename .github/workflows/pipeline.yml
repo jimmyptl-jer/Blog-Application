@@ -36,9 +36,6 @@ jobs:
     
     # Define steps to be executed as part of the job.
     steps:
-      # Upgrade the Ubuntu image (optional).
-      - name: Upgrade Ubuntu Image
-        run: sudo apt update && sudo apt upgrade -y
 
       # Checkout the code from the GitHub repository.
       - name: Checkout Code
@@ -73,9 +70,6 @@ jobs:
       
     # Define steps to be executed as part of the job.
     steps:
-      # Upgrade the Ubuntu image (optional).
-      - name: Upgrade Ubuntu Image
-        run: sudo apt update && sudo apt upgrade -y
           
       # Checkout the code from the GitHub repository.
       - name: Checkout Code
