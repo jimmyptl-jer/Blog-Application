@@ -29,9 +29,10 @@ jobs:
       
       - name: Install Docker and Configure
         run: |
-          sudo apt update
-          sudo apt install -y docker.io
-          sudo systemctl start docker
-          sudo systemctl enable docker
+          sudo apt-get remove docker docker-engine docker.io
+          sudo apt-get update
+          sudo apt install -y  docker.io
+          sudo snap install docker
           sudo usermod -aG docker $USER
           sudo systemctl restart docker
+          sudo docker --version
