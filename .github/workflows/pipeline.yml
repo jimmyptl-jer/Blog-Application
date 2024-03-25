@@ -85,13 +85,13 @@ jobs:
       - name: Build Client Docker Image
         working-directory: ./client
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/blog-application:client-${{ github.run_number }} .
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/blog-application:client .
       
       # Build Server Docker Image
       - name: Build Server Docker Image
         working-directory: ./api
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/blog-application:api-${{ github.run_number }} . 
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/blog-application:api . 
       
       # Docker Hub Login
       - name: Docker Hub Login
@@ -103,8 +103,8 @@ jobs:
       # Push Docker Images To Docker Hub
       - name: Push Docker Images To Docker Hub
         run: |
-          docker push ${{ secrets.DOCKER_USERNAME }}/blog-application:client-${{ github.run_number }}
-          docker push ${{ secrets.DOCKER_USERNAME }}/blog-application:api-${{ github.run_number }}
+          docker push ${{ secrets.DOCKER_USERNAME }}/blog-application:client
+          docker push ${{ secrets.DOCKER_USERNAME }}/blog-application:api
 
   # AWS Deployment job
   aws:
@@ -130,9 +130,7 @@ jobs:
           REMOTE_USER: ${{secrets.AWS_EC2_USERNAME}}
           SSH_PRIVATE_KEY:  ${{secrets.AWS_EC2_SSH_KEY}}
           run: |
-            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/blog-application:client-${{ github.run_number }}
-            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/blog-application:api-${{ github.run_number }}
-            sudo docker stop my-node-app || true
-            sudo docker rm my-node-app || true
-            sudo docker run -d -p 80:80 --name my-node-app ${{ secrets.DOCKER_USERNAME }}/blog-application:client-${{ github.run_number }}
-            sudo docker run -d -p 3000:3000 --name my-node-app-api ${{ secrets.DOCKER_USERNAME }}/blog-application:api-${{ github.run_number }}
+            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/blog-application:client
+            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/blog-application:api
+            sudo docker run -d -p 80:80 --name  ${{ secrets.DOCKER_USERNAME }}/blog-application:client
+            sudo docker run -d -p 3000:3000 --name my-node-app-api ${{ secrets.DOCKER_USERNAME }}/blog-application:api
