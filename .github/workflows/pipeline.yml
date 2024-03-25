@@ -3,7 +3,7 @@ name: MERN CI/CD
 
 # Define when the workflow should run (on push to main branch).
 on:
-  push:
+  pull_request:
     branches:
       - main
 
